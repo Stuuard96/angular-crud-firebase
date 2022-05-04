@@ -11,48 +11,48 @@ import { Post } from './post.model';
 })
 export class PostService {
 
-  constructor(private angularFirestore: AngularFirestore) {}
+  constructor(private angularFirestore: AngularFirestore) { }
 
   //Metodos para el CRUD
-  getPosts(){
+  getPosts() {
     return this.angularFirestore
-          .collection("posts")
-          .snapshotChanges()
+      .collection("posts")
+      .snapshotChanges()
   }
 
-  getPostById(id){
+  getPostById(id) {
     return this.angularFirestore
-          .collection("posts")
-          .doc(id)
-          .valueChanges()
+      .collection("posts")
+      .doc(id)
+      .valueChanges()
   }
 
-  createPost(post: Post){
-    return new Promise<any>((resolve, reject) =>{
+  createPost(post: Post) {
+    return new Promise<any>((resolve, reject) => {
       this.angularFirestore
         .collection("posts")
         .add(post)
-        .then((response)=>{
+        .then((response) => {
           console.log(response)
         },
-          (error)=>{
-          reject(error)
-      })
+          (error) => {
+            reject(error)
+          })
     })
   }
 
-  updatePost(post: Post, id){
+  updatePost(post: Post, id) {
     return this.angularFirestore
       .collection("posts")
       .doc(id)
       .update({
-        title:post.title,
+        title: post.title,
         content: post.content,
         author: post.author
-    });
+      });
   }
 
-  deletePost(post){
+  deletePost(post) {
     return this.angularFirestore
       .collection("posts")
       .doc(post.id)
